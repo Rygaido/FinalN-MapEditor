@@ -27,6 +27,16 @@ namespace mapEditorTest {
         public static List<Texture2D> enemies = new List<Texture2D>();//list of enemies
         public static List<Texture2D> obstacles = new List<Texture2D>();//list of obstacles
         public static List<Texture2D> extra = new List<Texture2D>(); //list of other things such as spawn points and end points
-    
+
+        //list containing lists so that we can loop through lists
+        public static List<List<Texture2D>> lists = new List<List<Texture2D>>() { platforms, enemies,obstacles,extra}; //we're in too deep
+
+        //theory: spcae char represents blank space, 
+        //char(space+1) to char(space+listSize) represent platforms
+        //the next (listSize) of chars represent enemies
+        //repeat for all lists, this way all chars can be identified by subtracting (space) and modulus(listSize) to get index,  
+        //list can be determined by subtracting (space) and dividing by listSize
+        public static int firstChar = (int)' '; //lets start at space for empty object
+        public static int listSize = 50; //and make list size a large number so that we can always expand later
     }
 }

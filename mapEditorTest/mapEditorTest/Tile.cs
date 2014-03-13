@@ -24,7 +24,7 @@ namespace mapEditorTest{
 
         private Vector2 loc; //location of tile
         private Texture2D image; //image on tile
-        private char value = (char) 0; //txt value corresponding to image
+        private char value = ' '; //txt value corresponding to image
 
         //public static int HEIGHT = 50; //seperate height and width values removed, tiles are square
         //public static int WIDTH = 50;
@@ -40,37 +40,51 @@ namespace mapEditorTest{
         //tile constructor
         public Tile() {
             scale = 1.0f; //scale set to 1 by default
+            //Update();
         }
 
         //open form for selection of object
         public void leftClick() {
-            value = (char)(((int)value)+1);
-            if ((int)value > 6) {
-                value = (char)0;
-            }
+            value = (char)((int)value + 1);
+
+            
+            //Update();
         }
 
-        //shortcut making wall object
+        //shortcut making empty object
         public void rightClick() {
-            value = (char)1;
+            value = ' ';
+
+            //call update after all changes to value
             //Update();
         }
 
         //check char value and update image and scale
         private void Update() {
-            //image = TextureBank.empty;
-            image = TextureBank.enemies[0]; //hardcoded to enemy sprite for debugging purposes
 
-            /* To do
-             * 
-             * Add code to check char value and assign corresponding texture
-             * 
-             * /
+            int num = (int)value - (int)' '; //convert value to an int, and subtract by space (empty value)
+            int listNum = num / TextureBank.listSize; //get the quotient (list the image is located in)
+            num %= TextureBank.listSize; //get the remainder (index in said list)
 
-            //set scale so that image fits size
-            scale = SIZE/((float)image.Height);             
-            //scale = 1.0f;
-            //*/
+            //listSize is larger than actual list, check to make sure num is within actual list
+            if (num >= TextureBank.lists[listNum].Count) {
+                value = (char)((int)value + TextureBank.listSize-num); //set value to first in next list
+                listNum++; //move to fist index of next list if exceeding previous
+                num = 0;
+
+                if (listNum >= TextureBank.lists.Count) { //exceeding last list, reset to space
+                    value = ' ';
+                }
+            }
+
+            if (value == ' ') { //space is empty, special case
+                image = TextureBank.empty;
+            }
+            else { //otherwise char is somewhere within lists
+                image = TextureBank.lists[listNum][num]; //get the specified image from the specified list
+            }
+
+            scale = SIZE / ((float)image.Height);  //adjuct scale of image
         }
 
         //draw tile's icon // requires a started spritebatch parameter

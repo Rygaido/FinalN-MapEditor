@@ -123,6 +123,11 @@ namespace mapEditorTest
 
                     grid[x, y].leftClick();
                 }
+                //check if right button was clicked, but wasn't clicked earlier 
+                if (current.RightButton == ButtonState.Pressed && previous.RightButton != ButtonState.Pressed) {
+
+                    grid[x, y].rightClick();
+                }
             }
             // TODO: Add your update logic here
 
