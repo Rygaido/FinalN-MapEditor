@@ -18,3 +18,5 @@ C:\Users\Ryan\documents\visual studio 2012\Projects\mapEditorTest\mapEditorTest\
 C:\Users\Ryan\documents\visual studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\platform.png
 C:\Users\Ryan\documents\visual studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\startPt.png
 C:\Users\Ryan\documents\visual studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\noBlock.png
+C:\Users\Ryan\Documents\Visual Studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\loadBtn.png
+C:\Users\Ryan\Documents\Visual Studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\saveBtn.png

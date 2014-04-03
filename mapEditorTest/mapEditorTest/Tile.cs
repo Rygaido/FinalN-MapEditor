@@ -26,6 +26,8 @@ namespace mapEditorTest{
         private Texture2D image; //image on tile
         private char value = ' '; //txt value corresponding to image
 
+        public char Value { get { return value; } set { this.value = value; } }
+
         //public static int HEIGHT = 50; //seperate height and width values removed, tiles are square
         //public static int WIDTH = 50;
         //private int scaleH; // height and width scale values removed, tiles are square

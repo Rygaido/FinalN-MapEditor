@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using System.Threading;
+using System.IO;
 #endregion
 
 namespace mapEditorTest
@@ -19,11 +20,16 @@ namespace mapEditorTest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Tile[,] grid;
-        int width = 5; //10 rows and columns by default
-        int height = 5;
+        int width = 10; //10 rows and columns by default
+        int height = 10;
 
         MouseState current;
         MouseState previous;
+
+        Button save;
+        Button load;
+
+        bool locked = false;
 
        // Texture2D tex;
 
@@ -32,6 +38,8 @@ namespace mapEditorTest
 
         public Game1(): base(){
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 800;
             Content.RootDirectory = "Content";
         }
 
@@ -47,8 +55,6 @@ namespace mapEditorTest
             grid = new Tile[defaultSize,defaultSize];
 
             newGrid(height, width); // initialize the grid
-
-            
 
             /* scrapped form-threaded control
             g = new GridControl();
@@ -85,6 +91,12 @@ namespace mapEditorTest
             TextureBank.extra.Add(Content.Load<Texture2D>("endPt"));
             TextureBank.extra.Add(Content.Load<Texture2D>("invisBblock"));
 
+            TextureBank.saveBtn = Content.Load<Texture2D>("saveBtn");
+            TextureBank.loadBtn = Content.Load<Texture2D>("loadBtn");
+
+
+            save = new Button(new Vector2(700, 400), TextureBank.saveBtn);
+            load = new Button(new Vector2(700, 500), TextureBank.loadBtn);
 
             // TODO: use this.Content to load your game content here
         }
@@ -129,6 +141,17 @@ namespace mapEditorTest
                     grid[x, y].rightClick();
                 }
             }
+
+            if (current.X > save.Loc.X && current.Y > save.Loc.Y && current.X < save.Loc.X + Button.SIZE && current.Y < save.Loc.Y + Button.SIZE && !locked) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                    SaveGrid();
+                }
+            }
+            if (current.X > load.Loc.X && current.Y > load.Loc.Y && current.X < load.Loc.X + Button.SIZE && current.Y < load.Loc.Y + Button.SIZE && !locked) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                    LoadGrid();
+                }
+            }
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -150,6 +173,8 @@ namespace mapEditorTest
                     grid[i, j].Draw(spriteBatch);
                 }
             }
+            save.Draw(spriteBatch);
+            load.Draw(spriteBatch);
             //spriteBatch.Draw(tex, grid[0, 0].Loc, Color.White);
             spriteBatch.End();
 
@@ -168,6 +193,52 @@ namespace mapEditorTest
                 }
             }
 
+        }
+
+        public void SaveGrid() {
+            locked = true;
+
+            string s = ""; //convert grid of chars to a single string
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width;j++ ) {
+                    s += grid[i, j].Value;
+                }
+                //s += "\n";
+            }
+            //Open new binary writer //for testing phase, there is no option to rename file
+            BinaryWriter writer= new BinaryWriter(File.Open("TestMap.dat",FileMode.Create));
+
+            //write number of rows, then columns then the string
+            writer.Write(height);
+            writer.Write(width);
+            writer.Write(s);
+
+            writer.Close();
+            locked = false;
+        }
+
+        public void LoadGrid() {
+            locked = true;
+
+            //Open new binary reader //for testing phase, there is no option to rename file
+            BinaryReader reader = new BinaryReader(File.Open("TestMap.dat", FileMode.Open));
+
+            //write number of rows, then columns then the string
+            int r = reader.ReadInt32();
+            int c = reader.ReadInt32();
+            string s = reader.ReadString();
+            char[] chars = s.ToCharArray();
+
+            newGrid(r,c);
+
+            for (int i = 0; i < r; i++) {
+                for (int j = 0; j < c; j++) {
+                    grid[i, j].Value = chars[(i*r+j)];
+                }
+            }
+
+            reader.Close();
+            locked = false;
         }
 
         /* Scrapped windows form interface
