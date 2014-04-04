@@ -20,8 +20,8 @@ namespace mapEditorTest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Tile[,] grid;
-        int width = 10; //10 rows and columns by default
-        int height = 10;
+        int width = 12; //10 rows and columns by default
+        int height = 9;
 
         MouseState current;
         MouseState previous;
@@ -51,8 +51,8 @@ namespace mapEditorTest
         /// </summary>
         protected override void Initialize(){
             // TODO: Add your initialization logic here
-            int defaultSize = 10;
-            grid = new Tile[defaultSize,defaultSize];
+            //int defaultSize = 10;
+            grid = new Tile[height,width];
 
             newGrid(height, width); // initialize the grid
 
@@ -81,6 +81,8 @@ namespace mapEditorTest
             
 
             //add all enemy sprite to a list (in order please)
+
+            TextureBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
             TextureBank.enemies.Add(Content.Load<Texture2D>("enemy"));
 
             //add all obstacle sprites
@@ -133,28 +135,39 @@ namespace mapEditorTest
                 //check if left button was clicked, but wasn't clicked earlier 
                 if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
 
-                    grid[x, y].leftClick();
+                    grid[y, x].leftClick();
+                    ChangesMade();
                 }
                 //check if right button was clicked, but wasn't clicked earlier 
                 if (current.RightButton == ButtonState.Pressed && previous.RightButton != ButtonState.Pressed) {
 
-                    grid[x, y].rightClick();
+                    grid[y, x].rightClick();
+                    ChangesMade();
                 }
             }
 
             if (current.X > save.Loc.X && current.Y > save.Loc.Y && current.X < save.Loc.X + Button.SIZE && current.Y < save.Loc.Y + Button.SIZE && !locked) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !save.Hit) {
+                    save.Hit=true;
                     SaveGrid();
                 }
             }
             if (current.X > load.Loc.X && current.Y > load.Loc.Y && current.X < load.Loc.X + Button.SIZE && current.Y < load.Loc.Y + Button.SIZE && !locked) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !load.Hit) {
+                    load.Hit=true;
                     LoadGrid();
                 }
             }
             // TODO: Add your update logic here
 
             base.Update(gameTime);
+        }
+
+        //reset save and load buttons because changes have been made to grid
+        private void ChangesMade(){
+
+            save.Hit = false;
+            load.Hit = false; 
         }
 
         /// <summary>
@@ -184,15 +197,17 @@ namespace mapEditorTest
         //New Grid creation method
         public void newGrid(int r, int c) {
             //create grid of size
+            grid = new Tile[r, c];
             //loop through all rows and columns
             for (int i = 0; i < r; i++) {
                 for (int j = 0; j < c; j++) {
                     //create new tiles and place rectangles according to location in matrix
                     grid[i, j] = new Tile();
-                    grid[i, j].Loc = new Vector2(i*Tile.SIZE,j*Tile.SIZE); //location is row and column * tile size
+                    grid[i, j].Loc = new Vector2(j*Tile.SIZE,i*Tile.SIZE); //location is row and column * tile size
                 }
             }
-
+            width = c;
+            height = r;
         }
 
         public void SaveGrid() {
@@ -215,6 +230,7 @@ namespace mapEditorTest
 
             writer.Close();
             locked = false;
+            //save.Reset();
         }
 
         public void LoadGrid() {
@@ -239,6 +255,7 @@ namespace mapEditorTest
 
             reader.Close();
             locked = false;
+            //load.Reset();
         }
 
         /* Scrapped windows form interface

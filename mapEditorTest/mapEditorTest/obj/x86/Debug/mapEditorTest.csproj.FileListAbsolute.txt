@@ -20,3 +20,25 @@ C:\Users\Ryan\documents\visual studio 2012\Projects\mapEditorTest\mapEditorTest\
 C:\Users\Ryan\documents\visual studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\noBlock.png
 C:\Users\Ryan\Documents\Visual Studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\loadBtn.png
 C:\Users\Ryan\Documents\Visual Studio 2012\Projects\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\saveBtn.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.exe
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.pdb
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\endPt.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\enemy.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\invisBblock.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\loadBtn.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\noBlock.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\obstacle.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\platform.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\saveBtn.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\startPt.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\wall.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Lidgren.Network.dll
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\MonoGame.Framework.dll
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\OpenTK.dll
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Tao.Sdl.dll
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csprojResolveAssemblyReference.cache
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.GridControl.resources
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csproj.GenerateResource.Cache
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\mapEditorTest.exe
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\mapEditorTest.pdb
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\walkingMinion.png

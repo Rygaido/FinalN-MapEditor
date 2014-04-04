@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 #endregion
 namespace mapEditorTest {
     class Button {
-        public static int SIZE = 50;
+        public static int SIZE = 100;
 
         //image scaling value // image will be scaled to fit static size
         private float scale;
@@ -20,8 +20,11 @@ namespace mapEditorTest {
 
         public Vector2 Loc { get { return loc; } }
 
-        public Button(Vector2 l, Texture2D i) {
+        public bool hit;
+        public bool Hit { get { return hit; } set { hit = value; } }
 
+        public Button(Vector2 l, Texture2D i) {
+            Hit = false;
             loc = l;
             image = i;
             scale = 1;
@@ -29,9 +32,14 @@ namespace mapEditorTest {
 
         //draw tile's icon // requires a started spritebatch parameter
         public void Draw(SpriteBatch sb) {
-
-            //draw scaled image at location, the rest of the values here are placeholders
-            sb.Draw(image, loc, null, Color.White, 0.0f, new Vector2(0, 0), scale, SpriteEffects.None, 0.0f);
+            Color c = Color.White;
+            if (hit) {
+                c = Color.DarkGray;
+            }
+            //draw image at location, on a square of size
+            sb.Draw(image, new Rectangle((int)loc.X, (int)loc.Y, SIZE, SIZE), c);
+            //sb.Draw(image, loc, null, c, 0.0f, new Vector2(0, 0), scale, SpriteEffects.None, 0.0f);
         }
+
     }
 }

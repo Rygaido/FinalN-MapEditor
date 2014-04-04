@@ -94,7 +94,8 @@ namespace mapEditorTest{
             Update();
             
             //draw scaled image at location, the rest of the values here are placeholders
-            sb.Draw(image,loc,null,Color.White,0.0f,new Vector2(0,0),scale,SpriteEffects.None,0.0f);
+           // sb.Draw(image,loc,null,Color.White,0.0f,new Vector2(0,0),scale,SpriteEffects.None,0.0f);
+            sb.Draw(image, new Rectangle((int)loc.X, (int)loc.Y, SIZE, SIZE), Color.White);
             /*if (value == (char)0) {
                 
                 sb.Draw(TextureBank.empty, loc, Color.White);
