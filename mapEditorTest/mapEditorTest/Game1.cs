@@ -19,17 +19,35 @@ namespace mapEditorTest
     public class Game1 : Game{
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Tile[,] grid;
-        int width = 12; //10 rows and columns by default
-        int height = 9;
 
+        //matrix of tiles
+        Tile[,] grid;
+
+        //total width and height of grid
+        int width = 24; 
+        int height = 18;
+
+        //x & y coords of visable segment of grid
+        int scrollX=0;
+        int scrollY=0;
+
+        //max length and width of visable segment of grid
+        int viewX = 12;
+        int viewY = 9;
+
+        //mousestates// used for clicking buttons and tiles
         MouseState current;
         MouseState previous;
 
+        //keyboardstates// used for scrolling
+        KeyboardState currentK;
+        KeyboardState previousK;
+
+        //buttons used for
         Button save;
         Button load;
 
-        bool locked = false;
+        bool locked = false; //used to prevent multiple accesses to dat file
 
        // Texture2D tex;
 
@@ -73,32 +91,32 @@ namespace mapEditorTest
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //empty sprite
-            TextureBank.empty = Content.Load<Texture2D>("noBlock");
+            ImageBank.empty = Content.Load<Texture2D>("noBlock");
 
             //add all platforming sprites, in order of selection
-            TextureBank.platforms.Add(Content.Load<Texture2D>("wall"));
-            TextureBank.platforms.Add(Content.Load<Texture2D>("platform"));
+            ImageBank.platforms.Add(Content.Load<Texture2D>("wall"));
+            ImageBank.platforms.Add(Content.Load<Texture2D>("platform"));
             
 
             //add all enemy sprite to a list (in order please)
 
-            TextureBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
-            TextureBank.enemies.Add(Content.Load<Texture2D>("enemy"));
+            ImageBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
+            ImageBank.enemies.Add(Content.Load<Texture2D>("enemy"));
 
             //add all obstacle sprites
-            TextureBank.obstacles.Add(Content.Load<Texture2D>("obstacle"));
+            ImageBank.obstacles.Add(Content.Load<Texture2D>("obstacle"));
 
             //add all extra sprites
-            TextureBank.extra.Add(Content.Load<Texture2D>("startPt"));
-            TextureBank.extra.Add(Content.Load<Texture2D>("endPt"));
-            TextureBank.extra.Add(Content.Load<Texture2D>("invisBblock"));
+            ImageBank.extra.Add(Content.Load<Texture2D>("startPt"));
+            ImageBank.extra.Add(Content.Load<Texture2D>("endPt"));
+            ImageBank.extra.Add(Content.Load<Texture2D>("invisBblock"));
 
-            TextureBank.saveBtn = Content.Load<Texture2D>("saveBtn");
-            TextureBank.loadBtn = Content.Load<Texture2D>("loadBtn");
+            ImageBank.saveBtn = Content.Load<Texture2D>("saveBtn");
+            ImageBank.loadBtn = Content.Load<Texture2D>("loadBtn");
 
 
-            save = new Button(new Vector2(700, 400), TextureBank.saveBtn);
-            load = new Button(new Vector2(700, 500), TextureBank.loadBtn);
+            save = new Button(new Vector2(700, 400), ImageBank.saveBtn);
+            load = new Button(new Vector2(700, 500), ImageBank.loadBtn);
 
             // TODO: use this.Content to load your game content here
         }
@@ -130,7 +148,11 @@ namespace mapEditorTest
             y = y / Tile.SIZE;
 
             //check if mouse is over grid
-            if (x >= 0 && x < width && y >= 0 && y < height) {
+            if (x >= 0 && x < viewX && y >= 0 && y < viewY) {
+
+                //adjust coords for scrolling before actions
+                x += scrollX;
+                y += scrollY;
                 
                 //check if left button was clicked, but wasn't clicked earlier 
                 if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
@@ -160,7 +182,58 @@ namespace mapEditorTest
             }
             // TODO: Add your update logic here
 
+            //scrolling with keyboard
+            previousK = currentK;
+            currentK = Keyboard.GetState();
+
+            int speed = 1;
+
+            //speed up if control key is held
+            if (currentK.IsKeyDown(Keys.RightControl) || currentK.IsKeyDown(Keys.LeftControl)) {
+                speed = 5;
+            }
+
+            //right key was pressed
+            if (currentK.IsKeyDown(Keys.Right) && !previousK.IsKeyDown(Keys.Right)) {
+                if (scrollX + speed <= width - viewX) {//check if room to scroll
+                    scrollX+=speed;
+                    ScrollGrid(-Tile.SIZE * speed, 0);
+                }
+            }
+            //left key was pressed
+            if (currentK.IsKeyDown(Keys.Left) && !previousK.IsKeyDown(Keys.Left)) {
+                if (scrollX - speed >= 0) {//check if room to scroll
+                    scrollX -= speed;
+                    ScrollGrid(+Tile.SIZE * speed, 0);
+                }
+            }
+
+            //down key was pressed
+            if (currentK.IsKeyDown(Keys.Down) && !previousK.IsKeyDown(Keys.Down)) {
+                if (scrollY + speed <= height - viewY) {//check if room to scroll
+                    scrollY += speed;
+                    ScrollGrid(0,-Tile.SIZE * speed);
+                }
+            }
+            //up key was pressed
+            if (currentK.IsKeyDown(Keys.Up) && !previousK.IsKeyDown(Keys.Up)) {
+            
+                if (scrollY - speed >= 0) {//check if room to scroll
+                    scrollY -= speed;
+                    ScrollGrid(0,+Tile.SIZE * speed);
+                }
+            }
+
             base.Update(gameTime);
+        }
+        //move all tiles in grid by specified amounts to stay onscreen
+        //pass in 0 to not change a dimension
+        private void ScrollGrid(int x, int y) {
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    grid[i, j].Loc = new Vector2(grid[i, j].Loc.X + x,grid[i, j].Loc.Y+y);
+                }
+            }
         }
 
         //reset save and load buttons because changes have been made to grid
@@ -181,8 +254,8 @@ namespace mapEditorTest
             spriteBatch.Begin();
 
             //call draw method on all tiles, loop through rows and columns
-            for (int i = 0; i < height ; i++) {
-                for (int j = 0; j < width ; j++) {
+            for (int i = scrollY; i < scrollY+ viewY; i++) {
+                for (int j = scrollX; j < scrollX+viewX; j++) {
                     grid[i, j].Draw(spriteBatch);
                 }
             }
@@ -249,7 +322,7 @@ namespace mapEditorTest
 
             for (int i = 0; i < r; i++) {
                 for (int j = 0; j < c; j++) {
-                    grid[i, j].Value = chars[(i*r+j)];
+                    grid[i, j].Value = chars[(i*c+j)];
                 }
             }
 

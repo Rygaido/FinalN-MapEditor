@@ -19,7 +19,7 @@ using Microsoft.Xna.Framework.GamerServices;
 //but adding to the begining of a list would change values of old objects, affecting all previously built maps 
 
 namespace mapEditorTest {
-    static class TextureBank {
+    static class ImageBank {
         
         public static Texture2D empty; //nothing occupying space
 
@@ -41,7 +41,7 @@ namespace mapEditorTest {
         //the next (listSize) of chars represent enemies
         //repeat for all lists, this way all chars can be identified by subtracting (space) and modulus(listSize) to get index,  
         //list can be determined by subtracting (space) and dividing by listSize
-        public static int firstChar = (int)'a'; //lets start at space for empty object
+        public static char firstChar = 'a'; //lets start at space for empty object
         public static int listSize = 50; //and make list size a large number so that we can always expand later
     }
 }

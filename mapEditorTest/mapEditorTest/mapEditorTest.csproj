@@ -45,7 +45,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextureBank.cs" />
+    <Compile Include="ImageBank.cs" />
     <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -24,7 +24,7 @@ namespace mapEditorTest{
 
         private Vector2 loc; //location of tile
         private Texture2D image; //image on tile
-        private char value = ' '; //txt value corresponding to image
+        private char value = ImageBank.firstChar; //txt value corresponding to image
 
         public char Value { get { return value; } set { this.value = value; } }
 
@@ -55,7 +55,7 @@ namespace mapEditorTest{
 
         //shortcut making empty object
         public void rightClick() {
-            value = ' ';
+            value = ImageBank.firstChar;
 
             //call update after all changes to value
             //Update();
@@ -64,26 +64,26 @@ namespace mapEditorTest{
         //check char value and update image and scale
         private void Update() {
 
-            int num = (int)value - (int)' '; //convert value to an int, and subtract by space (empty value)
-            int listNum = num / TextureBank.listSize; //get the quotient (list the image is located in)
-            num %= TextureBank.listSize; //get the remainder (index in said list)
+            int num = (int)value - (int)ImageBank.firstChar; //convert value to an int, and subtract by space (empty value)
+            int listNum = num / ImageBank.listSize; //get the quotient (list the image is located in)
+            num %= ImageBank.listSize; //get the remainder (index in said list)
 
             //listSize is larger than actual list, check to make sure num is within actual list
-            if (num >= TextureBank.lists[listNum].Count) {
-                value = (char)((int)value + TextureBank.listSize-num); //set value to first in next list
+            if (num >= ImageBank.lists[listNum].Count) {
+                value = (char)((int)value + ImageBank.listSize-num); //set value to first in next list
                 listNum++; //move to fist index of next list if exceeding previous
                 num = 0;
 
-                if (listNum >= TextureBank.lists.Count) { //exceeding last list, reset to space
-                    value = ' ';
+                if (listNum >= ImageBank.lists.Count) { //exceeding last list, reset to space
+                    value = ImageBank.firstChar;
                 }
             }
 
-            if (value == ' ') { //space is empty, special case
-                image = TextureBank.empty;
+            if (value == ImageBank.firstChar) { //space is empty, special case
+                image = ImageBank.empty;
             }
             else { //otherwise char is somewhere within lists
-                image = TextureBank.lists[listNum][num]; //get the specified image from the specified list
+                image = ImageBank.lists[listNum][num]; //get the specified image from the specified list
             }
 
             scale = SIZE / ((float)image.Height);  //adjuct scale of image
