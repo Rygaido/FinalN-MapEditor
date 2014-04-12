@@ -22,6 +22,8 @@ namespace mapEditorTest
 
         //matrix of tiles
         Tile[,] grid;
+        int gridX=50;
+        int gridY=50;
 
         //total width and height of grid
         int width = 24; 
@@ -47,8 +49,15 @@ namespace mapEditorTest
         Button save;
         Button load;
 
-        bool locked = false; //used to prevent multiple accesses to dat file
+        //add and removal buttons for resizing grid
+        Button addColL;
+        Button addColR;
+        Button addRowT;
+        Button addRowB;
 
+        bool locked = false; //used to prevent multiple accesses to dat file
+        bool cntrl = false;
+        bool shift = false;
        // Texture2D tex;
 
         //scrapped form
@@ -74,11 +83,6 @@ namespace mapEditorTest
 
             newGrid(height, width); // initialize the grid
 
-            /* scrapped form-threaded control
-            g = new GridControl();
-            Thread t = new Thread(ControlWindow);
-            t.Start(); //*/
-
             base.Initialize();
         }
 
@@ -97,9 +101,7 @@ namespace mapEditorTest
             ImageBank.platforms.Add(Content.Load<Texture2D>("wall"));
             ImageBank.platforms.Add(Content.Load<Texture2D>("platform"));
             
-
             //add all enemy sprite to a list (in order please)
-
             ImageBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
             ImageBank.enemies.Add(Content.Load<Texture2D>("enemy"));
 
@@ -111,6 +113,10 @@ namespace mapEditorTest
             ImageBank.extra.Add(Content.Load<Texture2D>("endPt"));
             ImageBank.extra.Add(Content.Load<Texture2D>("invisBblock"));
 
+            //spritefonts
+            ImageBank.font = Content.Load<SpriteFont>("Font1");
+
+            //button sprites
             ImageBank.saveBtn = Content.Load<Texture2D>("saveBtn");
             ImageBank.loadBtn = Content.Load<Texture2D>("loadBtn");
 
@@ -118,6 +124,10 @@ namespace mapEditorTest
             save = new Button(new Vector2(700, 400), ImageBank.saveBtn);
             load = new Button(new Vector2(700, 500), ImageBank.loadBtn);
 
+            addColR = new Button(new Vector2(700, 000), ImageBank.empty);
+            addRowB = new Button(new Vector2(700, 100), ImageBank.empty);
+            addColL = new Button(new Vector2(700, 200), ImageBank.empty);
+            addRowT = new Button(new Vector2(700, 300), ImageBank.empty);
             // TODO: use this.Content to load your game content here
         }
 
@@ -142,8 +152,8 @@ namespace mapEditorTest
             current = Mouse.GetState();
 
             //get mouse coordinates on grid
-            int x = current.X;
-            int y = current.Y;
+            int x = current.X-gridX;
+            int y = current.Y-gridY;
             x = x / Tile.SIZE;
             y = y / Tile.SIZE;
 
@@ -167,19 +177,22 @@ namespace mapEditorTest
                     ChangesMade();
                 }
             }
-
-            if (current.X > save.Loc.X && current.Y > save.Loc.Y && current.X < save.Loc.X + Button.SIZE && current.Y < save.Loc.Y + Button.SIZE && !locked) {
+            //save button clicked
+            if (save.MouseOver(current) && !locked) {
                 if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !save.Hit) {
                     save.Hit=true;
                     SaveGrid();
                 }
             }
-            if (current.X > load.Loc.X && current.Y > load.Loc.Y && current.X < load.Loc.X + Button.SIZE && current.Y < load.Loc.Y + Button.SIZE && !locked) {
+            //load button clicked
+            if (load.MouseOver(current) && !locked) {
                 if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !load.Hit) {
                     load.Hit=true;
                     LoadGrid();
                 }
             }
+
+            
             // TODO: Add your update logic here
 
             //scrolling with keyboard
@@ -191,6 +204,15 @@ namespace mapEditorTest
             //speed up if control key is held
             if (currentK.IsKeyDown(Keys.RightControl) || currentK.IsKeyDown(Keys.LeftControl)) {
                 speed = 5;
+                cntrl = true;
+            } else {
+                cntrl = false;
+            }
+            //invert row/col buttons when shift
+            if (currentK.IsKeyDown(Keys.RightShift) || currentK.IsKeyDown(Keys.LeftShift)) {
+                shift = true;
+            } else {
+                shift = false;
             }
 
             //right key was pressed
@@ -224,6 +246,44 @@ namespace mapEditorTest
                 }
             }
 
+            //add left column button clicked
+            if (addColL.MouseOver(current)) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                    if (!shift) {
+                        AddCol(speed,true);
+                    } else {
+                        AddCol(-speed,true);
+                    }
+                }
+            }//add right column button clicked
+            if (addColR.MouseOver(current)) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                    if (!shift) {
+                        AddCol(speed, false);
+                    } else {
+                        AddCol(-speed, false);
+                    }
+                }
+            }//add bottom row button clicked
+            if (addRowB.MouseOver(current)) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                    if (!shift) {
+                        AddRow(speed,false);
+                    } else {
+                        AddRow(-speed,false);
+                    }
+                }
+            }//add bottom row button clicked
+            if (addRowT.MouseOver(current)) {
+                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                    if (!shift) {
+                        AddRow(speed, true);
+                    } else {
+                        AddRow(-speed, true);
+                    }
+                }
+            }
+
             base.Update(gameTime);
         }
         //move all tiles in grid by specified amounts to stay onscreen
@@ -248,20 +308,37 @@ namespace mapEditorTest
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime){
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Gray);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
 
             //call draw method on all tiles, loop through rows and columns
-            for (int i = scrollY; i < scrollY+ viewY; i++) {
-                for (int j = scrollX; j < scrollX+viewX; j++) {
+            for (int i = scrollY; i < Math.Min(scrollY+ viewY, height); i++) {
+                for (int j = scrollX; j < Math.Min(scrollX+viewX,width); j++) {
                     grid[i, j].Draw(spriteBatch);
                 }
             }
+
+            //draw scroll values
+            spriteBatch.DrawString(ImageBank.font,""+scrollX,new Vector2(gridX,gridY/2),Color.Black);
+            spriteBatch.DrawString(ImageBank.font,""+scrollY,new Vector2(gridX/4,gridY),Color.Black);
+            //draw far-end grid values
+            spriteBatch.DrawString(ImageBank.font,(scrollX+viewX)+"   /"+width, new Vector2((gridX+Tile.SIZE*(viewX-1)), gridY/2), Color.Black);
+            spriteBatch.DrawString(ImageBank.font,(scrollY+viewY)+"\n/"+height, new Vector2(gridX/4,(gridY+Tile.SIZE*(viewY-1))), Color.Black);
+            spriteBatch.DrawString(ImageBank.font, "Use arrow keys to scroll\nHold Ctrl to scroll 5x faster", new Vector2(gridX / 4, (gridY + Tile.SIZE * (viewY))), Color.Black);
+            spriteBatch.DrawString(ImageBank.font, "Hold shfit to remove rows or columns\nHold Ctrl to add/rem rows/cols 5x faster", new Vector2(gridX * 6, (gridY + Tile.SIZE * (viewY))), Color.Black);
+
             save.Draw(spriteBatch);
             load.Draw(spriteBatch);
             //spriteBatch.Draw(tex, grid[0, 0].Loc, Color.White);
+
+            string s = "Add";
+            if (shift) { s = "Remove"; }
+            addColL.Draw(spriteBatch, s+" \ncolumn\nLeft");
+            addRowB.Draw(spriteBatch, s+" \nrow\nBottom");
+            addColR.Draw(spriteBatch, s + " \ncolumn\nRight");
+            addRowT.Draw(spriteBatch, s + " \nrow\nTop");
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -271,18 +348,21 @@ namespace mapEditorTest
         public void newGrid(int r, int c) {
             //create grid of size
             grid = new Tile[r, c];
+
+            scrollX = 0;
+            scrollY = 0;
             //loop through all rows and columns
             for (int i = 0; i < r; i++) {
                 for (int j = 0; j < c; j++) {
                     //create new tiles and place rectangles according to location in matrix
-                    grid[i, j] = new Tile();
-                    grid[i, j].Loc = new Vector2(j*Tile.SIZE,i*Tile.SIZE); //location is row and column * tile size
+                    grid[i, j] = NewTile(i, j);
                 }
             }
             width = c;
             height = r;
         }
 
+        //write grid's info to a .dat file
         public void SaveGrid() {
             locked = true;
 
@@ -291,7 +371,6 @@ namespace mapEditorTest
                 for (int j = 0; j < width;j++ ) {
                     s += grid[i, j].Value;
                 }
-                //s += "\n";
             }
             //Open new binary writer //for testing phase, there is no option to rename file
             BinaryWriter writer= new BinaryWriter(File.Open("TestMap.dat",FileMode.Create));
@@ -329,6 +408,74 @@ namespace mapEditorTest
             reader.Close();
             locked = false;
             //load.Reset();
+        }
+
+        //adds specified number of columns, a negative num removes cols
+        //invert parameter removes it from smaller-index side
+        public void AddCol(int num, bool invert) {
+            if (width + num <= 0) { return; } //cancel if going below 0
+
+            Tile[,] g = new Tile[height, width + num];
+            if (invert) {
+                scrollX+=num;
+
+                if (num < 0 && Math.Abs(num) > scrollX) {
+                    scrollX -= num;
+                    ScrollGrid(+Tile.SIZE * num,0);
+                }
+            }
+            for (int i = 0; i < height; i++) { //fill new grid 
+                for (int j = 0; j < width + num; j++) {
+                    if (j < width && !invert) {
+                        g[i, j] = grid[i, j];
+                    } else if(j>=num && invert){
+                        g[i, j] = grid[i, j - num];
+                    }else {
+                        g[i, j] = NewTile(i, j);
+                    }
+                }
+            }
+            //replace grid with new grid
+            grid = g;
+            width += num;
+        }
+
+        //adds specified number of rows, a negative num removes rows
+        //invert parameter removes it from smaller-index side
+        public void AddRow(int num,bool invert) {
+            if (height + num <= 0) { return; } //cancel if going below 0
+
+            Tile[,] g = new Tile[height+num, width];
+            if (invert) {
+                scrollY+=num;
+                if (num < 0 && Math.Abs(num) > scrollY) {
+                    scrollY -= num;
+                    ScrollGrid(0, +Tile.SIZE * num);
+                }
+            }
+            for (int i = 0; i < height+num; i++) { //fill new grid 
+                for (int j = 0; j < width; j++) {
+                    if (i < height && !invert) {
+                        g[i, j] = grid[i, j];
+                    } else if (i >= num && invert) {
+                        g[i, j] = grid[i-num, j];
+                    } else {
+                        g[i, j] = NewTile(i,j);
+                    }
+                }
+            }
+            //replace grid with new grid
+            grid = g;
+            height += num;
+        }
+
+        //makes a new tile in specified location
+        private Tile NewTile(int i, int j) {
+            Tile t =new Tile();
+            //location is scroll added to row and column * tile size add the initial grid coordinates
+            t.Loc = new Vector2((-scrollX+j) * Tile.SIZE + gridX, 
+                (-scrollY+i) * Tile.SIZE + gridY); 
+            return t;
         }
 
         /* Scrapped windows form interface

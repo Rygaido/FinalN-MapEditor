@@ -35,6 +35,7 @@ namespace mapEditorTest {
         public static Texture2D saveBtn;
         public static Texture2D loadBtn;
 
+        public static SpriteFont font;
 
         //theory: spcae char represents blank space, 
         //char(space+1) to char(space+listSize) represent platforms
