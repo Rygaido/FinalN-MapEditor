@@ -65,3 +65,4 @@ C:\Users\Ryan\Documents\GitHub\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Deb
 C:\Users\Ryan\Documents\GitHub\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.GridControl.resources
 C:\Users\Ryan\Documents\GitHub\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csproj.GenerateResource.Cache
 C:\Users\Ryan\Documents\GitHub\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\Font1.xnb
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\Font1.xnb
