@@ -106,7 +106,7 @@ namespace mapEditorTest
             
             //add all enemy sprite to a list (in order please)
             ImageBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
-            ImageBank.enemies.Add(Content.Load<Texture2D>("enemy"));
+            ImageBank.enemies.Add(Content.Load<Texture2D>("enemy2idle"));
 
             //add all obstacle sprites
             ImageBank.obstacles.Add(Content.Load<Texture2D>("obstacle"));
