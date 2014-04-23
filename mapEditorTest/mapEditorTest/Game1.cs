@@ -58,6 +58,9 @@ namespace mapEditorTest
         bool locked = false; //used to prevent multiple accesses to dat file
         bool cntrl = false;
         bool shift = false;
+        bool saving = false;
+        bool loading = false;
+        string saveString = "";
        // Texture2D tex;
 
         //scrapped form
@@ -151,137 +154,186 @@ namespace mapEditorTest
             previous = current; //update mouse states
             current = Mouse.GetState();
 
-            //get mouse coordinates on grid
-            int x = current.X-gridX;
-            int y = current.Y-gridY;
-            x = x / Tile.SIZE;
-            y = y / Tile.SIZE;
-
-            //check if mouse is over grid
-            if (x >= 0 && x < viewX && y >= 0 && y < viewY) {
-
-                //adjust coords for scrolling before actions
-                x += scrollX;
-                y += scrollY;
-                
-                //check if left button was clicked, but wasn't clicked earlier 
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
-
-                    grid[y, x].leftClick();
-                    ChangesMade();
-                }
-                //check if right button was clicked, but wasn't clicked earlier 
-                if (current.RightButton == ButtonState.Pressed && previous.RightButton != ButtonState.Pressed) {
-
-                    grid[y, x].rightClick();
-                    ChangesMade();
-                }
-            }
-            //save button clicked
-            if (save.MouseOver(current) && !locked) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !save.Hit) {
-                    save.Hit=true;
-                    SaveGrid();
-                }
-            }
-            //load button clicked
-            if (load.MouseOver(current) && !locked) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !load.Hit) {
-                    load.Hit=true;
-                    LoadGrid();
-                }
-            }
-
-            
-            // TODO: Add your update logic here
-
             //scrolling with keyboard
             previousK = currentK;
             currentK = Keyboard.GetState();
 
-            int speed = 1;
+            if (saving || loading) {
 
-            //speed up if control key is held
-            if (currentK.IsKeyDown(Keys.RightControl) || currentK.IsKeyDown(Keys.LeftControl)) {
-                speed = 5;
-                cntrl = true;
-            } else {
-                cntrl = false;
+                foreach (Keys k in currentK.GetPressedKeys()) {
+                    string keys = k.ToString();
+
+                    if (!previousK.IsKeyDown(k)) {
+                        if (keys.Length == 1) {
+                            if (Char.IsLetterOrDigit(keys[0])) {
+                                if (!shift) {
+                                    saveString += keys[0].ToString().ToLower();
+                                }
+                                else {
+                                    saveString += keys[0];
+                                }
+                            }
+
+                        }
+                        if (k.Equals(Keys.Back) && saveString.Length > 0) {
+                            saveString = saveString.Substring(0, saveString.Length - 1);
+                        }
+                        if (k.Equals(Keys.OemMinus) && shift) {
+                            saveString += "_";
+                        }
+                    }
+                }
+            }
+
+            else {
+                //get mouse coordinates on grid
+                int x = current.X - gridX;
+                int y = current.Y - gridY;
+                x = x / Tile.SIZE;
+                y = y / Tile.SIZE;
+
+                //check if mouse is over grid
+                if (x >= 0 && x < viewX && y >= 0 && y < viewY) {
+
+                    //adjust coords for scrolling before actions
+                    x += scrollX;
+                    y += scrollY;
+
+                    //check if left button was clicked, but wasn't clicked earlier 
+                    if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+
+                        grid[y, x].leftClick();
+                        ChangesMade();
+                    }
+                    //check if right button was clicked, but wasn't clicked earlier 
+                    if (current.RightButton == ButtonState.Pressed && previous.RightButton != ButtonState.Pressed) {
+
+                        grid[y, x].rightClick();
+                        ChangesMade();
+                    }
+                }
+                //save button clicked
+                if (save.MouseOver(current) && !locked) {
+                    if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !save.Hit) {
+                        save.Hit = true;
+                        saving = true;
+                    }
+                }
+                //load button clicked
+                if (load.MouseOver(current) && !locked) {
+                    if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed && !load.Hit) {
+                        load.Hit = true;
+                        loading = true;
+                    }
+                }
+
+                int speed = 1;
+
+                //speed up if control key is held
+                if (currentK.IsKeyDown(Keys.RightControl) || currentK.IsKeyDown(Keys.LeftControl)) {
+                    speed = 5;
+                    cntrl = true;
+                }
+                else {
+                    cntrl = false;
+                }
+                
+
+                //right key was pressed
+                if (currentK.IsKeyDown(Keys.Right) && !previousK.IsKeyDown(Keys.Right)) {
+                    if (scrollX + speed <= width - viewX) {//check if room to scroll
+                        scrollX += speed;
+                        ScrollGrid(-Tile.SIZE * speed, 0);
+                    }
+                }
+                //left key was pressed
+                if (currentK.IsKeyDown(Keys.Left) && !previousK.IsKeyDown(Keys.Left)) {
+                    if (scrollX - speed >= 0) {//check if room to scroll
+                        scrollX -= speed;
+                        ScrollGrid(+Tile.SIZE * speed, 0);
+                    }
+                }
+
+                //down key was pressed
+                if (currentK.IsKeyDown(Keys.Down) && !previousK.IsKeyDown(Keys.Down)) {
+                    if (scrollY + speed <= height - viewY) {//check if room to scroll
+                        scrollY += speed;
+                        ScrollGrid(0, -Tile.SIZE * speed);
+                    }
+                }
+                //up key was pressed
+                if (currentK.IsKeyDown(Keys.Up) && !previousK.IsKeyDown(Keys.Up)) {
+
+                    if (scrollY - speed >= 0) {//check if room to scroll
+                        scrollY -= speed;
+                        ScrollGrid(0, +Tile.SIZE * speed);
+                    }
+                }
+
+               
+                //add left column button clicked
+                if (addColL.MouseOver(current)) {
+                    if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                        if (!shift) {
+                            AddCol(speed, true);
+                        }
+                        else {
+                            AddCol(-speed, true);
+                        }
+                    }
+                }//add right column button clicked
+                if (addColR.MouseOver(current)) {
+                    if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                        if (!shift) {
+                            AddCol(speed, false);
+                        }
+                        else {
+                            AddCol(-speed, false);
+                        }
+                    }
+                }//add bottom row button clicked
+                if (addRowB.MouseOver(current)) {
+                    if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                        if (!shift) {
+                            AddRow(speed, false);
+                        }
+                        else {
+                            AddRow(-speed, false);
+                        }
+                    }
+                }//add bottom row button clicked
+                if (addRowT.MouseOver(current)) {
+                    if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
+                        if (!shift) {
+                            AddRow(speed, true);
+                        }
+                        else {
+                            AddRow(-speed, true);
+                        }
+                    }
+                }
+            }
+            //enter key was pressed
+            if (currentK.IsKeyDown(Keys.Enter) && !previousK.IsKeyDown(Keys.Enter)) {
+
+                if (saveString.ToLower() == "cancel") {
+                        saveString = "";
+                        loading = false;
+                }
+
+                if (saving) {
+                    SaveGrid();
+                }
+                if (loading) {
+                   LoadGrid();
+                }
             }
             //invert row/col buttons when shift
             if (currentK.IsKeyDown(Keys.RightShift) || currentK.IsKeyDown(Keys.LeftShift)) {
                 shift = true;
-            } else {
+            }
+            else {
                 shift = false;
-            }
-
-            //right key was pressed
-            if (currentK.IsKeyDown(Keys.Right) && !previousK.IsKeyDown(Keys.Right)) {
-                if (scrollX + speed <= width - viewX) {//check if room to scroll
-                    scrollX+=speed;
-                    ScrollGrid(-Tile.SIZE * speed, 0);
-                }
-            }
-            //left key was pressed
-            if (currentK.IsKeyDown(Keys.Left) && !previousK.IsKeyDown(Keys.Left)) {
-                if (scrollX - speed >= 0) {//check if room to scroll
-                    scrollX -= speed;
-                    ScrollGrid(+Tile.SIZE * speed, 0);
-                }
-            }
-
-            //down key was pressed
-            if (currentK.IsKeyDown(Keys.Down) && !previousK.IsKeyDown(Keys.Down)) {
-                if (scrollY + speed <= height - viewY) {//check if room to scroll
-                    scrollY += speed;
-                    ScrollGrid(0,-Tile.SIZE * speed);
-                }
-            }
-            //up key was pressed
-            if (currentK.IsKeyDown(Keys.Up) && !previousK.IsKeyDown(Keys.Up)) {
-            
-                if (scrollY - speed >= 0) {//check if room to scroll
-                    scrollY -= speed;
-                    ScrollGrid(0,+Tile.SIZE * speed);
-                }
-            }
-
-            //add left column button clicked
-            if (addColL.MouseOver(current)) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
-                    if (!shift) {
-                        AddCol(speed,true);
-                    } else {
-                        AddCol(-speed,true);
-                    }
-                }
-            }//add right column button clicked
-            if (addColR.MouseOver(current)) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
-                    if (!shift) {
-                        AddCol(speed, false);
-                    } else {
-                        AddCol(-speed, false);
-                    }
-                }
-            }//add bottom row button clicked
-            if (addRowB.MouseOver(current)) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
-                    if (!shift) {
-                        AddRow(speed,false);
-                    } else {
-                        AddRow(-speed,false);
-                    }
-                }
-            }//add bottom row button clicked
-            if (addRowT.MouseOver(current)) {
-                if (current.LeftButton == ButtonState.Pressed && previous.LeftButton != ButtonState.Pressed) {
-                    if (!shift) {
-                        AddRow(speed, true);
-                    } else {
-                        AddRow(-speed, true);
-                    }
-                }
             }
 
             base.Update(gameTime);
@@ -319,7 +371,7 @@ namespace mapEditorTest
                     grid[i, j].Draw(spriteBatch);
                 }
             }
-
+            string s = "";
             //draw scroll values
             spriteBatch.DrawString(ImageBank.font,""+scrollX,new Vector2(gridX,gridY/2),Color.Black);
             spriteBatch.DrawString(ImageBank.font,""+scrollY,new Vector2(gridX/4,gridY),Color.Black);
@@ -329,11 +381,19 @@ namespace mapEditorTest
             spriteBatch.DrawString(ImageBank.font, "Use arrow keys to scroll\nHold Ctrl to scroll 5x faster", new Vector2(gridX / 4, (gridY + Tile.SIZE * (viewY))), Color.Black);
             spriteBatch.DrawString(ImageBank.font, "Hold shfit to remove rows or columns\nHold Ctrl to add/rem rows/cols 5x faster", new Vector2(gridX * 6, (gridY + Tile.SIZE * (viewY))), Color.Black);
 
+            int xx= 100;
+            if (saving || loading) {
+                spriteBatch.Draw(ImageBank.empty, new Rectangle(xx, xx, 500, 200), Color.Cyan);
+
+                s = "save";
+                if (loading) { s = "load"; }
+                spriteBatch.DrawString(ImageBank.font, "Enter name of "+s+" file (or type cancel):\n" + saveString, new Vector2(xx+10, xx+10), Color.Black);
+            }
             save.Draw(spriteBatch);
             load.Draw(spriteBatch);
             //spriteBatch.Draw(tex, grid[0, 0].Loc, Color.White);
 
-            string s = "Add";
+            s = "Add";
             if (shift) { s = "Remove"; }
             addColL.Draw(spriteBatch, s+" \ncolumn\nLeft");
             addRowB.Draw(spriteBatch, s+" \nrow\nBottom");
@@ -373,7 +433,7 @@ namespace mapEditorTest
                 }
             }
             //Open new binary writer //for testing phase, there is no option to rename file
-            BinaryWriter writer= new BinaryWriter(File.Open("TestMap.dat",FileMode.Create));
+            BinaryWriter writer= new BinaryWriter(File.Open(saveString+".dat",FileMode.Create));
 
             //write number of rows, then columns then the string
             writer.Write(height);
@@ -382,14 +442,22 @@ namespace mapEditorTest
 
             writer.Close();
             locked = false;
+            saving = false;
+            saveString = "";
             //save.Reset();
         }
 
         public void LoadGrid() {
             locked = true;
-
-            //Open new binary reader //for testing phase, there is no option to rename file
-            BinaryReader reader = new BinaryReader(File.Open("TestMap.dat", FileMode.Open));
+            BinaryReader reader = null;
+            try {
+                //Open new binary reader //for testing phase, there is no option to rename file
+                reader = new BinaryReader(File.Open(saveString + ".dat", FileMode.Open));
+            }
+            catch (Exception e) {
+                saveString = "Invalid_File_Name";
+                return;
+            }
 
             //write number of rows, then columns then the string
             int r = reader.ReadInt32();
@@ -407,6 +475,8 @@ namespace mapEditorTest
 
             reader.Close();
             locked = false;
+            saveString = "";
+            loading = false;
             //load.Reset();
         }
 
