@@ -95,6 +95,7 @@
     <Content Include="Content\saveBtn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\SDL.dll" />
     <Content Include="Content\startPt.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -105,7 +106,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
-    <Content Include="SDL.dll" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Font1.xnb">
