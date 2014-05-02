@@ -103,10 +103,14 @@ namespace mapEditorTest
             //add all platforming sprites, in order of selection
             ImageBank.platforms.Add(Content.Load<Texture2D>("wall"));
             ImageBank.platforms.Add(Content.Load<Texture2D>("platform"));
+            ImageBank.platforms.Add(Content.Load<Texture2D>("shelfblock"));
+            ImageBank.platforms.Add(Content.Load<Texture2D>("edge1"));
+            ImageBank.platforms.Add(Content.Load<Texture2D>("edge2"));
             
             //add all enemy sprite to a list (in order please)
             ImageBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
             ImageBank.enemies.Add(Content.Load<Texture2D>("enemy2idle"));
+            ImageBank.enemies.Add(Content.Load<Texture2D>("lamp"));
 
             //add all obstacle sprites
             ImageBank.obstacles.Add(Content.Load<Texture2D>("obstacle"));

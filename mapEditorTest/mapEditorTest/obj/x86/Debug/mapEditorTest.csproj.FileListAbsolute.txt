@@ -91,3 +91,7 @@ D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Tao.Sdl.
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csprojResolveAssemblyReference.cache
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.GridControl.resources
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csproj.GenerateResource.Cache
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge1.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
