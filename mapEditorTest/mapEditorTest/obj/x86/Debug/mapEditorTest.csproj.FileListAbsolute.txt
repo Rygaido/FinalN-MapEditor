@@ -95,3 +95,7 @@ D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Conte
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
+D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge1.png
+D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
+D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
+D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
