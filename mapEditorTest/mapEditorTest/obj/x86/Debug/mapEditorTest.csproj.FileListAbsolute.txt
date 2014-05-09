@@ -95,6 +95,7 @@ D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Conte
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
+<<<<<<< HEAD
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge1.png
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
@@ -104,3 +105,5 @@ D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\
 =======
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\bosstank.png
 >>>>>>> fbb085854ec4bda3c681369d24ef979ed026ba98
+=======
+>>>>>>> parent of 418081f... Updated testLevel
