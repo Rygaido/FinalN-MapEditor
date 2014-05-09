@@ -95,15 +95,39 @@ D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Conte
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
-<<<<<<< HEAD
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge1.png
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
-<<<<<<< HEAD
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\desk.png
-=======
 D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\bosstank.png
->>>>>>> fbb085854ec4bda3c681369d24ef979ed026ba98
-=======
->>>>>>> parent of 418081f... Updated testLevel
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.exe
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.pdb
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\desk.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\bosstank.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge1.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\endPt.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\enemy.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\enemy2idle.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\invisBblock.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\loadBtn.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\noBlock.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\obstacle.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\platform.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\saveBtn.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\startPt.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\walkingMinion.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\wall.png
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\Font1.xnb
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csprojResolveAssemblyReference.cache
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.GridControl.resources
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csproj.GenerateResource.Cache
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\mapEditorTest.exe
+C:\Users\shumw_000\Documents\TA\MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\mapEditorTest.pdb
