@@ -106,6 +106,7 @@ namespace mapEditorTest
             ImageBank.platforms.Add(Content.Load<Texture2D>("shelfblock"));
             ImageBank.platforms.Add(Content.Load<Texture2D>("edge1"));
             ImageBank.platforms.Add(Content.Load<Texture2D>("edge2"));
+            ImageBank.platforms.Add(Content.Load<Texture2D>("desk"));
             
             //add all enemy sprite to a list (in order please)
             ImageBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
