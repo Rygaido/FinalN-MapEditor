@@ -99,4 +99,8 @@ D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\edge2.png
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\lamp.png
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\shelfblock.png
+<<<<<<< HEAD
 D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\desk.png
+=======
+D:\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\bosstank.png
+>>>>>>> fbb085854ec4bda3c681369d24ef979ed026ba98
