@@ -112,6 +112,7 @@ namespace mapEditorTest
             ImageBank.enemies.Add(Content.Load<Texture2D>("walkingMinion"));
             ImageBank.enemies.Add(Content.Load<Texture2D>("enemy2idle"));
             ImageBank.enemies.Add(Content.Load<Texture2D>("lamp"));
+            ImageBank.enemies.Add(Content.Load<Texture2D>("bosstank"));
 
             //add all obstacle sprites
             ImageBank.obstacles.Add(Content.Load<Texture2D>("obstacle"));
