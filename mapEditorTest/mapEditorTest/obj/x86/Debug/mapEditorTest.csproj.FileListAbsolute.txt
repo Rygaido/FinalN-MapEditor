@@ -191,3 +191,4 @@ C:\Users\Deswyn\Documents\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\bi
 C:\Users\Deswyn\Documents\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csprojResolveAssemblyReference.cache
 C:\Users\Deswyn\Documents\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.GridControl.resources
 C:\Users\Deswyn\Documents\GitHub\FinalN-MapEditor\mapEditorTest\mapEditorTest\obj\x86\Debug\mapEditorTest.csproj.GenerateResource.Cache
+D:\Hax\FinalN-MapEditor\mapEditorTest\mapEditorTest\bin\WindowsGL\Debug\Content\bosstank.png
