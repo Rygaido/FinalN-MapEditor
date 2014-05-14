@@ -92,6 +92,9 @@
     <Content Include="Content\invisBblock.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\keys.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\lamp.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

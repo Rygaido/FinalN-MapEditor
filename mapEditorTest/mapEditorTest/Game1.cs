@@ -121,6 +121,7 @@ namespace mapEditorTest
             ImageBank.extra.Add(Content.Load<Texture2D>("startPt"));
             ImageBank.extra.Add(Content.Load<Texture2D>("endPt"));
             ImageBank.extra.Add(Content.Load<Texture2D>("invisBblock"));
+            ImageBank.extra.Add(Content.Load<Texture2D>("keys"));
 
             //spritefonts
             ImageBank.font = Content.Load<SpriteFont>("Font1");
